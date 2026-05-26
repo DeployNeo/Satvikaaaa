@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for satvika</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --rose: #f0a0b4;
+  --rose-dim: rgba(240,160,180,0.18);
+  --lav: #c8b0e8;
+  --gold: #e0c07a;
+  --white: #ffffff;
+  --w90: rgba(255,255,255,0.9);
+  --w70: rgba(255,255,255,0.7);
+  --w45: rgba(255,255,255,0.45);
+  --w28: rgba(255,255,255,0.28);
+  --w14: rgba(255,255,255,0.14);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #07040f;
+  overflow-x: hidden;
+}
+
+/* SKY */
+#sky {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse at 25% 15%, #160828 0%, #07040f 55%);
+  overflow: hidden;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff;
+  animation: twinkle var(--d, 3s) ease-in-out infinite alternate;
+  opacity: var(--o, 0.5);
+}
+@keyframes twinkle {
+  0%   { opacity: var(--o, 0.5); transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.7); }
+}
+
+.shoot {
+  position: absolute;
+  width: 100px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
+  border-radius: 99px;
+  opacity: 0;
+  animation: shootAnim var(--sd, 8s) ease-in-out infinite;
+  animation-delay: var(--sdelay, 0s);
+}
+@keyframes shootAnim {
+  0%   { opacity: 0; transform: translate(0,0) rotate(-30deg); }
+  8%   { opacity: 0.9; }
+  35%  { opacity: 0; transform: translate(260px, 100px) rotate(-30deg); }
+  100% { opacity: 0; transform: translate(260px, 100px) rotate(-30deg); }
+}
+
+/* SVG PETAL FLOATS */
+.svg-petal {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  animation: petalDrift linear infinite;
+  opacity: 0;
+}
+@keyframes petalDrift {
+  0%   { opacity: 0; transform: translateY(-30px) rotate(0deg) translateX(0); }
+  8%   { opacity: 0.22; }
+  90%  { opacity: 0.1; }
+  100% { opacity: 0; transform: translateY(105vh) rotate(420deg) translateX(30px); }
+}
+
+/* SCROLL WRAP */
+#wrap { position: relative; z-index: 2; }
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  gap: 0;
+}
+
+.moon-wrap {
+  margin-bottom: 2.4rem;
+  animation: fadeUp 1.2s ease both;
+}
+.moon-svg { display: block; }
+
+@keyframes moonPulse {
+  0%,100% { filter: drop-shadow(0 0 18px rgba(230,200,100,0.3)) drop-shadow(0 0 48px rgba(230,200,100,0.1)); }
+  50%      { filter: drop-shadow(0 0 30px rgba(230,200,100,0.45)) drop-shadow(0 0 80px rgba(230,200,100,0.16)); }
+}
+.moon-svg { animation: moonPulse 4s ease-in-out infinite; }
+
+.hero-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  letter-spacing: 0.38em;
+  color: var(--gold);
+  opacity: 0.75;
+  margin-bottom: 1.1rem;
+  animation: fadeUp 1.4s 0.1s ease both;
+}
+
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(4rem, 11vw, 7.2rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  animation: fadeUp 1.5s 0.2s ease both;
+}
+.hero-name span { color: var(--rose); font-style: italic; }
+
+.hero-from {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: var(--w45);
+  letter-spacing: 0.18em;
+  font-weight: 300;
+  animation: fadeUp 1.6s 0.35s ease both;
+}
+
+.scroll-down {
+  margin-top: 4rem;
+  animation: fadeUp 1.8s 0.8s ease both, breathe 2.8s 1.8s ease-in-out infinite;
+  color: var(--w28);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.scroll-down span { font-size: 0.72rem; letter-spacing: 0.22em; }
+.scroll-down svg { opacity: 0.5; }
+@keyframes breathe { 0%,100%{ opacity:0.4; transform:translateY(0); } 50%{ opacity:0.8; transform:translateY(4px); } }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* SECTIONS */
+section.seg {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1.5rem;
+}
+
+.card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(240,160,180,0.14);
+  border-radius: 26px;
+  padding: 3rem 3.4rem;
+  max-width: 660px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(240,160,180,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 100% 100%, rgba(200,176,232,0.06) 0%, transparent 55%);
+  pointer-events: none;
+}
+
+.sec-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--rose);
+  opacity: 0.7;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sec-label::after {
+  content: '';
+  display: block;
+  height: 1px;
+  width: 36px;
+  background: var(--rose);
+  opacity: 0.35;
+}
+
+.sec-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.3rem;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 1.8rem;
+}
+.sec-title em { color: var(--rose); font-style: italic; }
+
+.prose {
+  font-size: 1rem;
+  line-height: 1.95;
+  color: var(--w70);
+  font-weight: 300;
+}
+.prose strong { color: var(--w90); font-weight: 500; }
+.prose em { color: var(--rose); font-style: italic; }
+
+/* DISTANCE */
+.dist-wrap {
+  margin: 2.4rem 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.city {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.city-ring {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--rose);
+  position: relative;
+  animation: ringPulse 2.6s ease-in-out infinite;
+}
+.city-ring.b { border-color: var(--lav); animation-delay: 1.3s; }
+.city-ring::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid var(--rose);
+  opacity: 0;
+  animation: ripple 2.6s ease-in-out infinite;
+}
+.city-ring.b::after { border-color: var(--lav); animation-delay: 1.3s; }
+@keyframes ringPulse { 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.2); } }
+@keyframes ripple   { 0%,100%{ opacity:0; transform:scale(1); } 50%{ opacity:0.4; transform:scale(2.2); } }
+
+.city-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--w45);
+  font-weight: 500;
+}
+.dist-line {
+  flex: 1;
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(240,160,180,0.35), rgba(200,176,232,0.35));
+  margin: 0 1.2rem;
+  top: -12px;
+}
+.dist-label {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  color: var(--w45);
+  white-space: nowrap;
+}
+.traveler {
+  position: absolute;
+  top: -10px;
+  animation: travel 5s ease-in-out infinite;
+}
+@keyframes travel {
+  0%   { left: 4%; }
+  50%  { left: 88%; }
+  100% { left: 4%; }
+}
+
+/* TAMIL */
+.tamil-section { text-align: center; }
+.tamil-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem;
+  font-weight: 300;
+  color: var(--white);
+  margin: 1.6rem 0 0.6rem;
+  animation: gentleFloat 4s ease-in-out infinite alternate;
+  letter-spacing: 0.02em;
+}
+@keyframes gentleFloat {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-7px); }
+}
+.tamil-roman {
+  font-size: 0.82rem;
+  letter-spacing: 0.18em;
+  color: var(--w28);
+  margin-bottom: 0.3rem;
+}
+.tamil-meaning {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--rose);
+  opacity: 0.8;
+  margin-bottom: 2rem;
+}
+.tamil-note {
+  font-size: 0.97rem;
+  line-height: 1.9;
+  color: var(--w45);
+  font-weight: 300;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* LETTER */
+.letter-body {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.22rem;
+  line-height: 1.95;
+  color: var(--w70);
+  font-style: italic;
+  margin-top: 0.4rem;
+  position: relative;
+  padding-left: 1rem;
+  border-left: 1px solid rgba(240,160,180,0.2);
+}
+.letter-sign {
+  display: block;
+  text-align: right;
+  font-style: normal;
+  font-size: 0.92rem;
+  color: var(--rose);
+  opacity: 0.8;
+  margin-top: 1.4rem;
+  letter-spacing: 0.04em;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* PETALS GRID */
+.petals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 0.4rem;
+}
+.petal-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(240,160,180,0.1);
+  border-radius: 16px;
+  padding: 1.3rem 1.4rem;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.petal-box.visible { opacity: 1; transform: translateY(0); }
+.petal-icon { margin-bottom: 0.8rem; display: block; }
+.petal-title {
+  font-size: 0.87rem;
+  font-weight: 500;
+  color: var(--w90);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+.petal-desc {
+  font-size: 0.84rem;
+  line-height: 1.7;
+  color: var(--w45);
+  font-weight: 300;
+}
+
+/* CLOSING */
+#closing {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5rem 2rem;
+}
+.closing-wrap { max-width: 520px; }
+.closing-icon { margin-bottom: 2.2rem; display: block; animation: closingBob 3.5s ease-in-out infinite alternate; }
+@keyframes closingBob {
+  0%   { transform: translateY(0) rotate(-2deg); }
+  100% { transform: translateY(-10px) rotate(2deg); }
+}
+.closing-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 8vw, 4.8rem);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.12;
+  margin-bottom: 1.8rem;
+}
+.closing-title em { color: var(--rose); font-style: italic; }
+.closing-prose {
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--w55, rgba(255,255,255,0.55));
+  font-weight: 300;
+}
+.closing-prose strong { color: var(--w90); font-weight: 500; }
+.closing-note {
+  margin-top: 2.8rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--w28);
+  letter-spacing: 0.06em;
+}
+
+/* FADE IN */
+.fade-in {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.95s ease, transform 0.95s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* RESPONSIVE */
+@media (max-width: 580px) {
+  .card { padding: 2.2rem 1.6rem; }
+  .sec-title { font-size: 1.9rem; }
+  .petals-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="sky" aria-hidden="true"></div>
+
+<div id="wrap">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="moon-wrap" aria-hidden="true">
+      <svg class="moon-svg" width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="42" cy="42" r="38" fill="url(#moonGrad)"/>
+        <circle cx="32" cy="30" r="5" fill="rgba(255,255,255,0.12)"/>
+        <circle cx="52" cy="48" r="3.5" fill="rgba(255,255,255,0.08)"/>
+        <circle cx="36" cy="54" r="2.5" fill="rgba(255,255,255,0.07)"/>
+        <defs>
+          <radialGradient id="moonGrad" cx="38%" cy="36%" r="60%" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stop-color="#fffbe8"/>
+            <stop offset="50%" stop-color="#f0d46a"/>
+            <stop offset="100%" stop-color="#d4a030"/>
+          </radialGradient>
+        </defs>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">a little something for you</p>
+    <h1 class="hero-name">Satvi<span>ka</span></h1>
+    <p class="hero-from">from Mumbai, with everything</p>
+    <div class="scroll-down" aria-hidden="true">
+      <span>scroll</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 3v10M4 9l4 4 4-4" stroke="rgba(255,255,255,0.45)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- DISTANCE -->
+  <section class="seg fade-in">
+    <div class="card">
+      <div class="sec-label">Mumbai to Chennai</div>
+      <h2 class="sec-title">1300 km <em>apart</em></h2>
+      <div class="dist-wrap" role="img" aria-label="Mumbai to Chennai, 1300 km">
+        <div class="city">
+          <div class="city-ring"></div>
+          <div class="city-tag">MUMBAI</div>
+        </div>
+        <div class="dist-line">
+          <div class="dist-label">1 3 0 0 k m</div>
+          <div class="traveler" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 2C9 2 4 7.5 4 11a5 5 0 0010 0C14 7.5 9 2 9 2Z" fill="rgba(240,160,180,0.75)"/>
+            </svg>
+          </div>
+        </div>
+        <div class="city">
+          <div class="city-ring b"></div>
+          <div class="city-tag">CHENNAI</div>
+        </div>
+      </div>
+      <p class="prose">
+        Maps say 1300 km. But I never once felt like you were far. You were always just there, in the back of my mind, in a good way. The kind that makes you hope someone is doing okay without needing to say it out loud.
+      </p>
+    </div>
+  </section>
+
+  <!-- TAMIL -->
+  <section class="seg fade-in">
+    <div class="card tamil-section">
+      <div class="sec-label">something I learned</div>
+      <div class="tamil-big" lang="ta" aria-label="Nee nallaa irukkanum">நீ நல்லா இருக்கணும்</div>
+      <div class="tamil-roman">nee nallaa irukkanum</div>
+      <div class="tamil-meaning">"I want you to be okay"</div>
+      <p class="tamil-note">
+        Nobody asked me to. I just wanted to say something that actually reached you. In your language. Not a grand thing, just something real.
+      </p>
+    </div>
+  </section>
+
+  <!-- LETTER -->
+  <section class="seg fade-in">
+    <div class="card">
+      <div class="sec-label">a letter</div>
+      <h2 class="sec-title">From me <em>to you</em></h2>
+      <div class="letter-body">
+        Satvika,
+        <br><br>
+        You carry a lot. Your family, your studies, everything at home. And you do it quietly, without making it anyone else's problem. I noticed that. Most people don't carry things that way.
+        <br><br>
+        I don't always find the right words. But I know this much. You deserve someone who doesn't need reminding to show up. Who is just there, without making it a whole thing.
+        <br><br>
+        Your boards are done. That's big. You made it through everything and you are still you. That says a lot about who you are.
+        <br><br>
+        You are genuinely loved. Not because of what you do. Just because you are you.
+        <span class="letter-sign">Yash</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTICED -->
+  <section class="seg fade-in">
+    <div class="card">
+      <div class="sec-label">things I noticed</div>
+      <h2 class="sec-title">About <em>you</em></h2>
+      <div class="petals-grid">
+        <div class="petal-box">
+          <span class="petal-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3C12 3 7 8 7 13a5 5 0 0010 0C17 8 12 3 12 3Z" stroke="rgba(240,160,180,0.7)" stroke-width="1.3" fill="rgba(240,160,180,0.08)"/>
+            </svg>
+          </span>
+          <div class="petal-title">Quiet strength</div>
+          <div class="petal-desc">You don't announce what you are going through. You just get through it. That is not a small thing.</div>
+        </div>
+        <div class="petal-box">
+          <span class="petal-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="9" width="18" height="13" rx="2" stroke="rgba(200,176,232,0.7)" stroke-width="1.3" fill="rgba(200,176,232,0.07)"/>
+              <path d="M9 9V7a3 3 0 016 0v2" stroke="rgba(200,176,232,0.7)" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <div class="petal-title">You protect people</div>
+          <div class="petal-desc">Even when home feels heavy, you hold it together for the people you love. That takes a certain kind of heart.</div>
+        </div>
+        <div class="petal-box">
+          <span class="petal-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="9" stroke="rgba(224,192,122,0.6)" stroke-width="1.3" fill="rgba(224,192,122,0.07)"/>
+              <path d="M12 7v5l3 3" stroke="rgba(224,192,122,0.6)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <div class="petal-title">You are serious</div>
+          <div class="petal-desc">Your focus and how much you care about the things that matter. That says a lot about who you are becoming.</div>
+        </div>
+        <div class="petal-box">
+          <span class="petal-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M21 12.7A9 9 0 1111.3 3a7 7 0 009.7 9.7Z" stroke="rgba(240,160,180,0.6)" stroke-width="1.3" fill="rgba(240,160,180,0.07)"/>
+            </svg>
+          </span>
+          <div class="petal-title">Calming presence</div>
+          <div class="petal-desc">Just knowing you are there is enough. You don't have to say anything. Your presence just feels like calm.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section id="closing">
+    <div class="closing-wrap fade-in">
+      <span class="closing-icon" aria-hidden="true">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="28" fill="rgba(240,160,180,0.07)" stroke="rgba(240,160,180,0.18)" stroke-width="1"/>
+          <path d="M32 44C32 44 18 35 18 26.5a7.5 7.5 0 0114-3.7A7.5 7.5 0 0146 26.5C46 35 32 44 32 44Z" fill="rgba(240,160,180,0.55)" stroke="rgba(240,160,180,0.4)" stroke-width="1.2"/>
+        </svg>
+      </span>
+      <h2 class="closing-title">
+        Congratulations,<br><em>Satvika.</em>
+      </h2>
+      <p class="closing-prose">
+        Your boards are done. You went through all of it, the pressure, the long silence, everything at home, and you came out the other side still yourself. <strong>Still soft. Still kind. Still you.</strong>
+        <br><br>
+        I made this because I wanted you to feel it. That someone waited without making it a big deal. That someone is genuinely proud of you. That you are seen.
+        <br><br>
+        <strong>You are enough. More than.</strong>
+      </p>
+      <p class="closing-note">made by Yash, from a city 1300 km away</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  // Stars
+  const sky = document.getElementById('sky');
+  for (let i = 0; i < 200; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2 + 0.4;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;--o:${0.25+Math.random()*0.6};animation-delay:${Math.random()*6}s;`;
+    sky.appendChild(s);
+  }
+
+  // Shooting stars
+  for (let i = 0; i < 4; i++) {
+    const ss = document.createElement('div');
+    ss.className = 'shoot';
+    ss.style.cssText = `top:${8+Math.random()*35}%;left:${4+Math.random()*30}%;--sd:${7+Math.random()*5}s;--sdelay:${i*2.4+Math.random()*2}s;`;
+    sky.appendChild(ss);
+  }
+
+  // SVG petals (lightweight, no emoji)
+  const petalPaths = [
+    '<svg width="14" height="18" viewBox="0 0 14 18" fill="none"><ellipse cx="7" cy="9" rx="5" ry="8" fill="rgba(240,160,180,0.5)" transform="rotate(-15 7 9)"/></svg>',
+    '<svg width="12" height="16" viewBox="0 0 12 16" fill="none"><ellipse cx="6" cy="8" rx="4" ry="7" fill="rgba(200,176,232,0.45)" transform="rotate(20 6 8)"/></svg>',
+    '<svg width="10" height="14" viewBox="0 0 10 14" fill="none"><ellipse cx="5" cy="7" rx="3.5" ry="6" fill="rgba(240,160,180,0.4)" transform="rotate(-30 5 7)"/></svg>',
+  ];
+  for (let i = 0; i < 10; i++) {
+    const p = document.createElement('div');
+    p.className = 'svg-petal';
+    p.innerHTML = petalPaths[i % petalPaths.length];
+    p.style.cssText = `left:${Math.random()*100}%;top:-3%;animation-duration:${14+Math.random()*10}s;animation-delay:${Math.random()*15}s;`;
+    document.body.appendChild(p);
+  }
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        e.target.querySelectorAll('.petal-box').forEach((el, i) => {
+          setTimeout(() => el.classList.add('visible'), i * 140 + 180);
+        });
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+})();
+</script>
+</body>
+</html>
